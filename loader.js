@@ -16,6 +16,22 @@
     'game.bundle.3.b64',
     'game.bundle.4.b64'
   ];
+  // Longitud esperada del base64 unido (sin espacios) y correcciones de
+  // transcripción conocidas: [posición, carácter correcto]. Idempotente:
+  // si el carácter ya es correcto, no se toca.
+  var EXPECTED_LEN = 71980;
+  var ERRATA = [[10630, '5'], [18097, 'A'], [57980, 'q']];
+
+  function applyErrata(b64) {
+    if (b64.length !== EXPECTED_LEN) return b64;
+    for (var i = 0; i < ERRATA.length; i++) {
+      var p = ERRATA[i][0];
+      if (b64.charAt(p) !== ERRATA[i][1]) {
+        b64 = b64.slice(0, p) + ERRATA[i][1] + b64.slice(p + 1);
+      }
+    }
+    return b64;
+  }
 
   function showError(msg) {
     var d = document.createElement('div');
@@ -72,7 +88,7 @@
         return Promise.all(BUNDLE_PARTS.map(fetchText));
       })
       .then(function (parts) {
-        var b64 = parts.join('').replace(/\s+/g, '');
+        var b64 = applyErrata(parts.join('').replace(/\s+/g, ''));
         return gunzip(b64ToBytes(b64));
       })
       .then(function (blob) {

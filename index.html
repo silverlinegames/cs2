@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<title>Counter-Strike Web · Operación Polvo</title>
+<meta name="description" content="Clon de Counter-Strike que corre en tu navegador: mapa Operación Polvo, bots con IA, economía por rondas y bomba C4.">
+<style>
+  html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #000; }
+  #csg-root { position: fixed; inset: 0; }
+  #csg-loading {
+    position: absolute; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 14px;
+    background: #0d0e10; color: #e8e2d5; z-index: 50;
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+    transition: opacity .4s;
+  }
+  #csg-loading .t { font-size: 30px; font-weight: 800; letter-spacing: 5px; }
+  #csg-loading .t .a { color: #e79b3a; }
+  #csg-loading .s { font-size: 12px; letter-spacing: 3px; color: #9a9482; }
+  #csg-loading .bar { width: 220px; height: 4px; background: #232529; border-radius: 2px; overflow: hidden; }
+  #csg-loading .bar i { display: block; height: 100%; width: 40%; background: #e79b3a; border-radius: 2px; animation: csload 1s infinite; }
+  @keyframes csload { 0% { transform: translateX(-100%); } 100% { transform: translateX(280%); } }
+</style>
+</head>
+<body>
+<div id="csg-root">
+  <div id="csg-loading">
+    <div class="t">COUNTER-STRIKE <span class="a">WEB</span></div>
+    <div class="s">OPERACIÓN POLVO</div>
+    <div class="bar"><i></i></div>
+  </div>
+</div>
+<script src="loader.js"></script>
+<script>
+  // ocultar la pantalla de carga cuando el juego está listo
+  (function () {
+    var check = setInterval(function () {
+      var menu = document.getElementById('csg-menu');
+      if (menu) {
+        clearInterval(check);
+        var l = document.getElementById('csg-loading');
+        if (l) {
+          l.style.opacity = '0';
+          setTimeout(function () { l.remove(); }, 420);
+        }
+      }
+    }, 100);
+  })();
+</script>
+</body>
+</html>

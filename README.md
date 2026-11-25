@@ -47,5 +47,6 @@ El sitio quedará publicado en `https://silverlinegames.github.io/cs2/`.
 
 - El motor 3D es **Three.js r128**, cargado desde CDN con respaldo.
 - El código del juego viaja comprimido (gzip + base64) en `game.bundle.1..4.b64`; `loader.js` lo descarga, lo descomprime con `DecompressionStream` y lo ejecuta. Así el repo queda listo para GitHub Pages con carga rápida.
+- `loader.js` contiene una tabla `ERRATA` con 3 correcciones menores de caracteres del paquete (idempotentes: solo aplican si el carácter aún no es el correcto). Si algún día regeneras los archivos `game.bundle.*.b64`, elimina esa tabla del loader.
 - Las texturas del mundo se generan **proceduralmente en canvas** (con mapas normales calculados por sobel), por lo que no hay binarios que mantener. Armas, camuflajes, cielo, decals y sonidos (WebAudio) también son 100% procedurales.
 - Compatible con Chrome/Edge 80+, Firefox 113+ y Safari 16.4+.
